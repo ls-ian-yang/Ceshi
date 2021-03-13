@@ -1,7 +1,7 @@
 #include <iostream>
+#include <iterator>
 #include <cstring>
 #include <string>
-//#include <format>
 #include <map>
 using namespace std;
 
@@ -13,7 +13,6 @@ string getTail(string fileName)
     while((pos = fileName.find(delimiter)) != string::npos)
     {
         token = fileName.substr(0, pos);
-//        cout << token << endl;
         fileName.erase(0, pos + delimiter.length());
     }
     
@@ -46,40 +45,47 @@ class interpreter
 class cuda : public interpreter
 {
     public:
-    void compile(string fileName, char **param = nullptr)
+    void compile(string fileName, int argc, char **param = nullptr)
     {
         string head = getHead(fileName);
         string tail = getTail(fileName); 
-//        cout<<fileName<<head<<tail<<endl;
         string command;
-//       command = format("nvcc {} -o test_{}", fileName, head);
+//      command = format("nvcc {} -o test_{}", fileName, head);
         command = "nvcc " + fileName + " -o test_" + head;
-        char finalCommand[100];
+        for(int i = 0; i < argc; i++)
+        {
+            command += " ";
+            command += string(param[i]);
+        }
+        char finalCommand[256];
         strcpy(finalCommand, command.c_str());
-//        cout<<finalCommand<<endl;
+        cout << finalCommand << endl;
         system(finalCommand);
-//        cout<<"happy"<<endl;
         return;
     }
 };
 
 
-int main(int argc, char **argv)
-{
-    string fileName = argv[1];
-    string tail = getTail(fileName);
-//    cout<< tail <<endl;
     typedef map<string, string> dic;
     typedef map<string, interpreter*> inter;
+
+int main(int argc, char **argv)
+{
     dic f2l;
     inter l2c;
-    f2l["cu"] = "cuda";
     cuda cudaCompiler;
+    f2l["cu"] = "cuda";
+
+    string fileName = argv[1];
+    string tail = getTail(fileName);
+
+
 //    cout << f2l[tail] << endl;
 /*
     l2c["cuda"] = cudaCompiler;
     l2c[f2l[tail]].compile(argv);
 */
+
     if(f2l[tail] == "cuda")
-        cudaCompiler.compile(fileName);
+        cudaCompiler.compile(fileName, argc - 2, &argv[2]);
 }
