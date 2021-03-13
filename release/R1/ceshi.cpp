@@ -35,37 +35,27 @@ string getHead(string fileName)
 class interpreter
 {
     public:
-    void compile(string fileName, int argc, char **param)
+    void compile(char **param)
     {
-        string parameters = handleParam(argc, param);
-        compose(fileName, parameters);
+        cout<<"Compiling"<<endl;
         return;
     }
-
-    string handleParam(int argc, char **param = nullptr)
-    {
-        string command;
-        for(int i = 0; i < argc; i++)
-        {
-            command += " ";
-            command += string(param[i]);
-        }
-        return command;
-    }
-    
-    virtual void compose(string fileName, string param);
 };
 
 class cuda : public interpreter
 {
     public:
-    void compose(string fileName, string param)
+    void compile(string fileName, int argc, char **param = nullptr)
     {
         string head = getHead(fileName);
+        string tail = getTail(fileName); 
         string command;
-//      command = format("nvcc {} -o test_{}", fileName, head);
         command = "nvcc " + fileName + " -o test_" + head;
-        command += param;
+        for(int i = 0; i < argc; i++)
+        {
+            command += " ";
+            command += string(param[i]);
+        }
         char finalCommand[256];
         strcpy(finalCommand, command.c_str());
         cout << finalCommand << endl;
@@ -88,13 +78,6 @@ int main(int argc, char **argv)
     string fileName = argv[1];
     string tail = getTail(fileName);
 
-
-//    cout << f2l[tail] << endl;
-    l2c["cuda"] = &cudaCompiler;
-    interpreter* ptr = l2c[f2l[tail]];
-    ptr->compile(fileName, argc - 2, &argv[2]);
-
-    /*if(f2l[tail] == "cuda")
+    if(f2l[tail] == "cuda")
         cudaCompiler.compile(fileName, argc - 2, &argv[2]);
-    */
 }

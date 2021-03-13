@@ -63,7 +63,6 @@ class cuda : public interpreter
     {
         string head = getHead(fileName);
         string command;
-//      command = format("nvcc {} -o test_{}", fileName, head);
         command = "nvcc " + fileName + " -o test_" + head;
         command += param;
         char finalCommand[256];
@@ -87,14 +86,6 @@ int main(int argc, char **argv)
 
     string fileName = argv[1];
     string tail = getTail(fileName);
-
-
-//    cout << f2l[tail] << endl;
-    l2c["cuda"] = &cudaCompiler;
-    interpreter* ptr = l2c[f2l[tail]];
-    ptr->compile(fileName, argc - 2, &argv[2]);
-
-    /*if(f2l[tail] == "cuda")
+    if(f2l[tail] == "cuda")
         cudaCompiler.compile(fileName, argc - 2, &argv[2]);
-    */
 }
