@@ -110,16 +110,10 @@ int main(int argc, char **argv)
     f2l["cu"] = "cuda";
     f2l["py"] = "python";
 
-//    cout << f2l[tail] << endl;
-
     // Add S.3
     l2c["cuda"] = &cudaCompiler;
     l2c["python"] = &pythonCompiler;
 
     interpreter* ptr = l2c[f2l[tail]];
     ptr->compile(fileName, argc - 2, &argv[2]);
-
-    /*if(f2l[tail] == "cuda")
-        cudaCompiler.compile(fileName, argc - 2, &argv[2]);
-    */
 }
