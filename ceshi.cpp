@@ -2,6 +2,9 @@
 #include <iterator>
 #include <cstring>
 #include <string>
+#include <vector>
+#include <boost/foreach.hpp>
+#include <boost/program_options/parsers.hpp>
 #include <map>
 using namespace std;
 
@@ -94,9 +97,9 @@ class python : public interpreter
     typedef map<string, string> dic;
     typedef map<string, interpreter*> inter;
 
-int main(int argc, char **argv)
+int ceshi(int argc, char **argv)
 {
-    string fileName = argv[1];
+    string fileName = argv[0];
     string tail = getTail(fileName);
 
     dic f2l;
@@ -117,9 +120,37 @@ int main(int argc, char **argv)
     l2c["python"] = &pythonCompiler;
 
     interpreter* ptr = l2c[f2l[tail]];
-    ptr->compile(fileName, argc - 2, &argv[2]);
+    ptr->compile(fileName, argc - 1, &argv[1]);
 
     /*if(f2l[tail] == "cuda")
         cudaCompiler.compile(fileName, argc - 2, &argv[2]);
     */
+    return 0;
+}
+
+int ceshiMode()
+{
+    string arguments;
+    while(cin >> arguments)
+    {
+        cout << arguments << endl;
+        if(arguments == "quit")
+            return 0;
+    }
+    return 0;
+}
+
+
+int main(int argc, char **argv)
+{
+    string test = "hel asdj qweiq";
+    vector<string> args = boost::program_options::split_winmain(test);
+    std::cout << args[0] << endl;
+    if(argc == 1)
+    {
+        ceshiMode();
+        return 0;
+    }
+    ceshi(argc - 1, &argv[1]);
+    return 0;
 }

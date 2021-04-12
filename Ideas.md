@@ -26,6 +26,10 @@
 ## For R5 and further
 
 + abstract compose, too many duplicated code!
++ Formatted class, modified via config file
++ ceshi mode
++ Parse options, change 
+  + string fileName = argv[1];
 
 ## Dreams
 

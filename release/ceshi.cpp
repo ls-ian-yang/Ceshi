@@ -66,7 +66,7 @@ class cuda : public interpreter
 //      command = format("nvcc {} -o test_{}", fileName, head);
         command = "nvcc " + fileName + " -o test_" + head;
         command += param;
-        char finalCommand[256];wec
+        char finalCommand[256];
         strcpy(finalCommand, command.c_str());
         cout << finalCommand << endl;
         system(finalCommand);
