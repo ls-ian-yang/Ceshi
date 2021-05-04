@@ -187,14 +187,6 @@ int ceshi(int argc, char **argv)
     f2l["cpp"] = "cpp";
     f2l["c++"] = "cpp";
     f2l["c"] = "cpp";
-    //cout << f2l[tail] << endl;
-
-    //Return error if the file is not defined.
-    if(f2l[tail] == "")
-    {
-        cout << "File type ." << tail << " is not supported";
-        return 1;
-    }
 
     // Add S.3
     l2c["cuda"] = &cudaCompiler;
@@ -218,14 +210,9 @@ int ceshiMode()
     string arguments;
     while(cin >> arguments)
     {
-        //Need a real split later
-        if(getTail(arguments) != arguments)
-        {
-            char * argv[1] = {(char*)arguments.c_str()};
-            ceshi(1, argv);
-        }
-        else
-            cout << arguments << endl;
+        cout << arguments << endl;
+        if(arguments == "quit")
+            return 0;
     }
     return 0;
 }
