@@ -23,16 +23,31 @@
   + Update l2c
 + Rearrange code
   
-## For R5 and further
+## R5
 
 + abstract compose, too many duplicated code!
-+ Formatted class, modified via config file
 + ceshi mode
-+ Parse options, change 
-  + string fileName = argv[1];
++ Rearranged code
+
+## R6
+
++ release.bat added to simplify the workflow
++ Now use V for version instead R for realease to resolve the conflict of initial
++ Added the prototype of terminal mode
+
+## R7 Plan
+
++ simple compile -- shit
+  + shit to compile the file that is changed most recently
+  + shit to match the test named files
+  + shit file to modify the compilation
 
 ## Dreams
 
++ Formatted class, modified via config file
 + User defined compiler
 + Open-source compiler downloader
 + More complicated parameter structure to enable file structured dedicate testing process.
++ Full functioning terminal mode
++ Parse options, change 
+  + string fileName = argv[1];
