@@ -3,6 +3,8 @@
 #include <cstring>
 #include <string>
 #include <vector>
+//#include <boost/foreach.hpp>
+//#include <boost/program_options/parsers.hpp>
 #include <map>
 using namespace std;
 
@@ -104,6 +106,7 @@ class cuda : public interpreter
 
         string head = getHead(fileName);
         string command;
+//      command = format("nvcc {} -o test_{}", fileName, head);
         command = "nvcc " + fileName + " -o " + prefix + head;
         command += param;
         char finalCommand[256];
@@ -205,6 +208,9 @@ int ceshi(int argc, char **argv)
     interpreter* ptr = l2c[f2l[tail]];
     ptr->compile(fileName, argc - 1, &argv[1]);
 
+    /*if(f2l[tail] == "cuda")
+        cudaCompiler.compile(fileName, argc - 2, &argv[2]);
+    */
     return 0;
 }
 
@@ -241,6 +247,8 @@ int ceshiMode()
 
 int main(int argc, char **argv)
 {
+    //string test = "hel asdj qweiq";
+    //vector<string> args = boost::program_options::split_winmain(test);
     if(argc == 1)
     {
         ceshiMode();
