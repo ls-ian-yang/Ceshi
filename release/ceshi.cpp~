@@ -87,7 +87,7 @@ class interpreter
     
     virtual void compose(string fileName, string param, int *mode = defaultMode)
     {
-        return;
+        return
     };
 };
 
