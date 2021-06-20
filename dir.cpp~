@@ -18,7 +18,7 @@ void printDir( const char* path )
             printf("   [%s]\n", data.name );
         nRet = _findnext( hnd, &data );
     }
-    _findclose( hnd );     // 关闭当前句柄
+    fclose( hnd );     // 关闭当前句柄
 }
 int main()
 {
