@@ -22,5 +22,5 @@ void printDir( const char* path )
 }
 void main()
 {
-    printDir("d:/*.*");
+    printDir("./*.*");
 }
