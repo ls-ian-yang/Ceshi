@@ -26,10 +26,13 @@ char* getNewestFile( const char* path )
         char name1[260];
         strcpy(name1, ptr->d_name);
         stat(ptr->d_name, &buf);
-        if(buf.st_mtime > newTime)
+        if(!S_ISDIR(buf.st_mode))
         {
-            newTime = buf.st_mtime;
-            strcpy(name, name1);
+            if(buf.st_mtime > newTime)
+            {
+                newTime = buf.st_mtime;
+                strcpy(name, name1);
+            }
         }
     }
 
