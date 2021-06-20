@@ -3,8 +3,8 @@
 #include <cstring>
 #include <string>
 #include <vector>
-#include <boost/foreach.hpp>
-#include <boost/program_options/parsers.hpp>
+//#include <boost/foreach.hpp>
+//#include <boost/program_options/parsers.hpp>
 #include <map>
 using namespace std;
 
@@ -87,7 +87,10 @@ class interpreter
         return command;
     }
     
-    virtual void compose(string fileName, string param, int *mode = defaultMode);
+    virtual void compose(string fileName, string param, int *mode = defaultMode)
+    {
+        return;
+    };
 };
 
 class cuda : public interpreter
