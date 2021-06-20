@@ -1,27 +1,17 @@
-#include <sys/io.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
 #include <stdio.h>
- 
-void printDir( const char* path )
-{
-    struct _finddata_t data;
-    long hnd = _findfirst( path, &data );    // 查找文件名与正则表达式chRE的匹配第一个文件
-    if ( hnd < 0 )
-    {
-        perror( path );
-    }
-    int  nRet = (hnd <0 ) ? -1 : 1;
-    while ( nRet >= 0 )
-    {
-        if ( data.attrib == _A_SUBDIR )  // 如果是目录
-            printf("   [%s]*\n", data.name );
-        else
-            printf("   [%s]\n", data.name );
-        nRet = _findnext( hnd, &data );
-    }
-    _findclose( hnd );     // 关闭当前句柄
-}
-int main()
-{
-    printDir("./*.*");
+
+int main(){
+    DIR    *dir;
+    struct    dirent    *ptr;
+    
+    dir = opendir("/home/zhangyang/kmeans");
+    
+    while((ptr = readdir(dir)) != NULL)
+        printf("d_name: %s\n", ptr->d_name);
+
+    closedir(dir);
     return 0;
 }
