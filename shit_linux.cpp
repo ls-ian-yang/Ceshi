@@ -1,5 +1,4 @@
-#include <dirent.h>
-#include <unistd.h>
+#include <io.h>
 #include <time.h>
 #include <string.h>
 #include <iostream>
@@ -16,31 +15,25 @@ time_t newTime = 0;
 
 char* getNewestFile( const char* path )
 {
-    struct stat buf;
-    struct _finddata_t data;
-    long hnd = _findfirst( path, &data );    // 查找文件名与正则表达式chRE的匹配第一个文件
-    if ( hnd < 0 )
+    DIR *dir;
+    struct dirent *ptr;
+    dir = opendir(".");
+    
+    while((ptr = readdir(dir)) != NULL)
     {
-        perror( path );
-    }
-    int  nRet = (hnd <0 ) ? -1 : 1;
-    while ( nRet >= 0 )
-    {
-        
-        if ( data.attrib != _A_SUBDIR )  // 如果是目录
+        printf("d_name: %s\n", ptr->d_name);
+        char name1[260];
+        strcpy(name1, data.name);
+        stat(data.name, &buf);
+        if(buf.st_mtime > newTime)
         {
-            char name1[260];
-            strcpy(name1, data.name);
-            stat(data.name, &buf);
-            if(buf.st_mtime > newTime)
-            {
-                newTime = buf.st_mtime;
-                strcpy(name, name1);
-            }
+            newTime = buf.st_mtime;
+            strcpy(name, name1);
         }
-        nRet = _findnext( hnd, &data );
     }
-    _findclose( hnd );     // 关闭当前句柄
+
+    closedir(dir);
+    return 0;
 }
 
 int main(int argc, char **argv)
@@ -83,7 +76,7 @@ int main(int argc, char **argv)
     {
         strcpy(name, "test.cpp");
     }
-
+    
     if (result != 0)
     {
         perror("Error");
