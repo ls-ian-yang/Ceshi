@@ -1,9 +1,10 @@
-#include <io.h>
 #include <time.h>
 #include <string.h>
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <dirent.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -16,15 +17,15 @@ time_t newTime = 0;
 char* getNewestFile( const char* path )
 {
     DIR *dir;
+    struct stat buf;
     struct dirent *ptr;
     dir = opendir(".");
     
     while((ptr = readdir(dir)) != NULL)
     {
-        printf("d_name: %s\n", ptr->d_name);
         char name1[260];
-        strcpy(name1, data.name);
-        stat(data.name, &buf);
+        strcpy(name1, ptr->d_name);
+        stat(ptr->d_name, &buf);
         if(buf.st_mtime > newTime)
         {
             newTime = buf.st_mtime;

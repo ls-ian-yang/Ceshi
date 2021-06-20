@@ -7,7 +7,7 @@ int main(){
     DIR    *dir;
     struct    dirent    *ptr;
     
-    dir = opendir("/home/zhangyang/kmeans");
+    dir = opendir(".");
     
     while((ptr = readdir(dir)) != NULL)
         printf("d_name: %s\n", ptr->d_name);
