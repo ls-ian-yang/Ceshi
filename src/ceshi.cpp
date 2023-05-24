@@ -51,6 +51,14 @@ string getHead(string fileName)
     return nullptr;
 }
 
+void executeString(string command)
+{
+    char finalCommand[256];
+    strcpy(finalCommand, command.c_str());
+    cout << finalCommand << endl;
+    system(finalCommand);
+    return;
+}
 
 /*
 -----------------------------------------------------------------
@@ -72,6 +80,7 @@ class interpreter
     void compile(string fileName, int argc, char **param, int *mode = defaultMode)
     {
         string parameters = handleParam(argc, param, mode);
+        
         compose(fileName, parameters, mode);
         return;
     }
